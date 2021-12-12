@@ -1,37 +1,38 @@
-## Welcome to GitHub Pages
+### js链表翻转
 
-You can use the [editor on GitHub](https://github.com/FishYjSmile/linknodereverse/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+/*function ListNode(x){
+    this.val = x;
+    this.next = null;
+}*/
+function ReverseList(pHead){
+    var newHead, temp;
+    if(!pHead){
+        return null;
+    }
+    if(pHead.next === null){
+        return pHead;    // 单递归参数为链尾时返回，
+    } else {
+        newHead = ReverseList(pHead.next);  // 进行递归，传递子链
+    }
+    temp = pHead.next;   // 交换指针位置
+    temp.next = pHead;   // 此时为null以此不会出现对象地址相同
+    pHead.next = null;     // 将首指针指向尾指针
+    temp = null;              // 释放内存
+    return newHead;        // 形成闭包，保存此时的链表对象
+}
+复制代码
+例如  a -> b -> c -> d -> null 的形式进行翻转
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+此时先将此链表结构建好
 
-### Markdown
+function ListNode(x){
+    this.val = x;
+    this.next = null;
+}
+1.进行递归，分别传递的p 参数为 d   最终newp为d链表对象    ，并将该对象以闭包的方式保存
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+2.随后进行第二次递归 参数为 cd  最后进行 参数对象的交换 ， 其中通过指针第三项为null这个特性  ，temp = p -> next  (d)  , temp->next = p （ 此时的temp->next的值为null，所以可以直接赋值p对象，不会出现对象内存值相同） ,  p->next = null   (使链头其指向null)      
 
-```markdown
-Syntax highlighted code block
+3.此时修改了参数链表的指向 ，又因为newp为闭包参数，所以前面改变的参数指向这里同时与newp指向的地址相同，所以也一起进行了修改，以此实现了翻转      
 
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [Basic writing and formatting syntax](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/FishYjSmile/linknodereverse/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+ out.
